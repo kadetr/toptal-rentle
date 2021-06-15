@@ -30,7 +30,7 @@ const containerStyle = {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-rentle',
-    googleMapsApiKey: "AIzaSyBz-DGgWxh1FSE-OKh9yGmOBKSbNUg7stY"
+    googleMapsApiKey: ""
   })
 
   const onUnmount = React.useCallback(function callback(map) {
