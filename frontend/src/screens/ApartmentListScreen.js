@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
+import ListApartmentMap from "../components/ListApartmentMap"
 import {
   listApartments,
   deleteApartment,
 } from '../actions/apartmentActions'
-import { APARTMENT_CREATE_RESET } from '../constants/apartmentConstants'
 
 const ApartmentListScreen = ({ history, match }) => {
   const pageNumber = match.params.pageNumber || 1
@@ -64,9 +64,7 @@ const ApartmentListScreen = ({ history, match }) => {
     }
   }
 
-  // const createApartmentHandler = () => {
-  //   dispatch(createApartment())
-  // }
+
 
   return (
     <>
@@ -74,30 +72,26 @@ const ApartmentListScreen = ({ history, match }) => {
         <Col>
           <h1>Apartments</h1>
         </Col>
-        {/* <Col className='text-right'>
-          <Button className='my-3' onClick={createApartmentHandler}>
-            <i className='fas fa-plus'></i> Create Apartment
-          </Button>
-        </Col> */}
+
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
-      {/* {loadingCreate && <Loader />}
-      {errorCreate && <Message variant='danger'>{errorCreate}</Message>} */}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant='danger'>{errorCreate}</Message>} 
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
-          <Table striped bordered hover responsive className='table-sm'>
+
+          <Table striped bordered hover responsive className='table-sm   '>
             <thead>
               <tr>
                 <th>NAME</th>
                 <th>PRICE</th>
                 <th>SIZE</th>
-                <th>ROOMS</th>
-                <th>AVAILABLE</th>
+                <th>RENTED</th>
                 <th></th>
               </tr>
             </thead>
@@ -107,7 +101,6 @@ const ApartmentListScreen = ({ history, match }) => {
                   <td>{apartment.name}</td>
                   <td>${apartment.price}</td>
                   <td>{apartment.size}</td>
-                  <td>{apartment.rooms}</td>
                   <td>{apartment.isRented +""}</td>
                   <td>
                     <LinkContainer to={`/realtor/apartments/${apartment._id}/edit`}>
@@ -128,6 +121,8 @@ const ApartmentListScreen = ({ history, match }) => {
             </tbody>
           </Table>
           <Paginate pages={pages} page={page} isAdmin={true} />
+         
+         
         </>
       )}
     </>

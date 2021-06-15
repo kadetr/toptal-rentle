@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { createApartment } from "../actions/apartmentActions";
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import ListApartmentMap from "../components/ListApartmentMap"
 import Geocode from "react-geocode";
 
 
-Geocode.setApiKey("AIzaSyBz-DGgWxh1FSE-OKh9yGmOBKSbNUg7stY");
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS);
 Geocode.setLanguage("en");
 Geocode.setRegion("tr");
 
@@ -20,7 +18,7 @@ Geocode.setLocationType("ROOFTOP");
 Geocode.enableDebug();
 
 
-const ApartmentCreateScreen = ({ location,  history }) => {
+const ApartmentCreateScreen = ({  history }) => {
    const [name, setName] = useState('')
    const [description, setDescription] = useState('')
    const [price, setPrice] = useState("")
@@ -31,20 +29,11 @@ const ApartmentCreateScreen = ({ location,  history }) => {
    const [addressFlag,setAddressFlag] = useState(false)
    const [address,setAddress] = useState("")
 
-
    const dispatch = useDispatch();
 
    const userLogin = useSelector((state) => state.userLogin)
-  const { loading, error, userInfo } = userLogin
+   const { loading, error, userInfo } = userLogin
 
-
-   // const redirect = location.search ? location.search.split('=')[1] : '/'
-
-   // useEffect(() => {
-   //   if (userInfo) {
-   //     history.push(redirect)
-   //   }
-   // }, [history, userInfo, redirect])
    const rName= userInfo.name
 
    const submitHandler = (event, name, description, price, size, rooms, geolocation, rName) => {
@@ -65,6 +54,7 @@ const ApartmentCreateScreen = ({ location,  history }) => {
    const handleAddressFlag = (flag) =>{
     setAddressFlag(flag)
    }
+
    const setGeolocationOnMap = (marker) =>{
       setGeolocation(marker)
    }
@@ -100,7 +90,12 @@ const ApartmentCreateScreen = ({ location,  history }) => {
      </Form.Group>
        </Col>
        </Row>  
-    <div><span onClick={()=>handleAddressFlag(false)}>Geolocation</span> | <span onClick={()=>handleAddressFlag(true)}>Address</span></div>
+    <div className="my-2">{addressFlag ? 
+      <span onClick={()=>handleAddressFlag(false)} style={{cursor: "pointer"}} >Geolocation</span>
+    : <span onClick={()=>handleAddressFlag(false)} style={{cursor: "pointer", fontWeight: "bold"}} >Geolocation</span> } | 
+    {addressFlag ? 
+      <span onClick={()=>handleAddressFlag(true)} style={{cursor: "pointer", fontWeight: "bold"}}>Address</span>
+    : <span onClick={()=>handleAddressFlag(true)} style={{cursor: "pointer"}}>Address</span>} </div>
     {!addressFlag ? 
     <Form.Group controlId='geolocation'>
       <ListApartmentMap clickable ={true} setGeolocationOnMap={setGeolocationOnMap}/>
@@ -193,8 +188,6 @@ const ApartmentCreateScreen = ({ location,  history }) => {
 
         </Col>
          </Row>
-       
-
      <Form.Group controlId='isRented'>
               <Form.Check
                 type='checkbox'

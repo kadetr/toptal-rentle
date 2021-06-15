@@ -92,11 +92,6 @@ export const register = (name, email, password) => async (dispatch) => {
          payload: data,
       });
 
-      // dispatch({
-      //    type: USER_LOGIN_SUCCESS,
-      //    payload: data,
-      // });
-
       localStorage.setItem("userInfo", JSON.stringify(data));
    } catch (error) {
       dispatch({
@@ -124,8 +119,7 @@ export const getUserDetails = () => async (dispatch, getState) => {
             Authorization: `Bearer ${userInfo.token}`,
          },
       };
-      let p = userInfo._id;
-      //if (id === "profile") p = userInfo._id;
+      
       const { data } = await axios.get(`/api/users/profile`, config);
 
       dispatch({

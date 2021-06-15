@@ -39,9 +39,8 @@ const HomeScreen = ({match, history}) => {
       }
       else
          history.push('/login')
-
       
-    }, [dispatch, pageNumber, userInfo])
+    }, [dispatch,history, pageNumber, userInfo])
 
       
    const getSelectedId = (id) =>{
@@ -84,10 +83,10 @@ const HomeScreen = ({match, history}) => {
       <>
          <Meta />
          <Row>
-            <Col>
+            <Col className ="my-4">
                <ListApartmentMap  apartments={apartments} selectedId={selectedId} />
             </Col>
-            <Col style={{height: "80vh", overflow:"auto"}}>
+            <Col style={{height: "50vh", overflow:"auto"}} className="my-2">
                {loading ? (
                   <Loader />
                   ) : error ? (
