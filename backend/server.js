@@ -14,10 +14,6 @@ connectDB();
 
 const app = express();
 
-if (process.env.NODE_DEV === "development") {
-   app.use(morgan("dev"));
-}
-
 app.use(express.json());
 
 app.use("/api/users", userRoutes);

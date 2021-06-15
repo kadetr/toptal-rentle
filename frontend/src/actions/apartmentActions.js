@@ -18,14 +18,22 @@ import {
 } from '../constants/apartmentConstants'
 import { logout } from './userActions'
 
-export const listApartments = (pageNumber = '', flag =false) => async (
-    dispatch
-  ) => {
+export const listApartments = (pageNumber = '', flag =false) => async (dispatch, getState) => {
     try {
       dispatch({ type: APARTMENT_LIST_REQUEST })
-  
+      
+      const {
+        userLogin: { userInfo },
+     } = getState();
+
+     const config = {
+        headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+        },
+     };
+
       const { data } = await axios.get(
-        `/api/apartments?pageNumber=${pageNumber}&flag=${flag}`
+        `/api/apartments?pageNumber=${pageNumber}&flag=${flag}`, config
       )
 
       dispatch({

@@ -99,14 +99,11 @@ const ApartmentCreateScreen = ({ location,  history }) => {
        ></Form.Control>
      </Form.Group>
        </Col>
-       </Row>
-       
-       
-     
+       </Row>  
     <div><span onClick={()=>handleAddressFlag(false)}>Geolocation</span> | <span onClick={()=>handleAddressFlag(true)}>Address</span></div>
     {!addressFlag ? 
     <Form.Group controlId='geolocation'>
-      <ListApartmentMap create ={true} setGeolocationOnMap={setGeolocationOnMap}/>
+      <ListApartmentMap clickable ={true} setGeolocationOnMap={setGeolocationOnMap}/>
       <Row>
       <Col className="w-50 py-3">
         <Form.Label>Latitude</Form.Label>

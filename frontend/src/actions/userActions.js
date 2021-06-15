@@ -109,7 +109,7 @@ export const register = (name, email, password) => async (dispatch) => {
    }
 };
 
-export const getUserDetails = (id) => async (dispatch, getState) => {
+export const getUserDetails = () => async (dispatch, getState) => {
    try {
       dispatch({
          type: USER_DETAILS_REQUEST,
@@ -124,9 +124,9 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
             Authorization: `Bearer ${userInfo.token}`,
          },
       };
-      let p = id;
-      if (id === "profile") p = userInfo._id;
-      const { data } = await axios.get(`/api/users/${p}`, config);
+      let p = userInfo._id;
+      //if (id === "profile") p = userInfo._id;
+      const { data } = await axios.get(`/api/users/profile`, config);
 
       dispatch({
          type: USER_DETAILS_SUCCESS,
@@ -281,7 +281,6 @@ export const updateUserAdmin = ({ id, name, email, isRealtor,isAdmin }) => async
          },
       };
 
-      console.log(id);
 
       const { data } = await axios.put(
          `/api/users/${id}`,

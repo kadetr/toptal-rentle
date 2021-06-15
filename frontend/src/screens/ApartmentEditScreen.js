@@ -1,12 +1,13 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Row,Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { showApartmentDetails, updateApartment } from '../actions/apartmentActions'
+import ListApartmentMap from "../components/ListApartmentMap"
 import { APARTMENT_UPDATE_RESET } from '../constants/apartmentConstants'
 
 const ApartmentEditScreen = ({ match, history }) => {
@@ -20,6 +21,8 @@ const ApartmentEditScreen = ({ match, history }) => {
   const [isRented, setIsRented] = useState(false)
   const [geolocation, setGeolocation] = useState({lat:"", lng:""})
   const [rName, setRName] = useState("")
+  const [addressFlag,setAddressFlag] = useState(false)
+  const [address,setAddress] = useState("")
 
   const dispatch = useDispatch()
 
@@ -33,6 +36,13 @@ const ApartmentEditScreen = ({ match, history }) => {
     success: successUpdate,
   } = apartmentUpdate
 
+  const handleAddressFlag = (flag) =>{
+    setAddressFlag(flag)
+   }
+
+   const setGeolocationOnMap = (marker) =>{
+    setGeolocation(marker)
+ }
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: APARTMENT_UPDATE_RESET })
@@ -94,16 +104,9 @@ const ApartmentEditScreen = ({ match, history }) => {
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
+            
 
-            <Form.Group controlId='description'>
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter description'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+           
 
             <Form.Group controlId='price'>
               <Form.Label>Price</Form.Label>
@@ -112,6 +115,68 @@ const ApartmentEditScreen = ({ match, history }) => {
                 placeholder='Enter price'
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <div><span onClick={()=>handleAddressFlag(false)}>Geolocation</span> | <span onClick={()=>handleAddressFlag(true)}>Address</span></div>
+    {!addressFlag ? 
+    <Form.Group controlId='geolocation'>
+      <ListApartmentMap clickable ={true} setGeolocationOnMap={setGeolocationOnMap}/>
+      <Row>
+      <Col className="w-50 py-3">
+        <Form.Label>Latitude</Form.Label>
+      <Form.Control
+        type='number'
+        placeholder='Latitude'
+        value={geolocation.lat}
+        onChange={(e) => {
+         const val = e.target.value;
+         setGeolocation(prevState => {
+           return { ...prevState, lat: val }
+         });
+        }}
+      ></Form.Control>
+
+      </Col>
+      <Col className="w-50 py-3">
+        <Form.Label>Longitude</Form.Label>
+      <Form.Control
+        type='number'
+        placeholder='Longitude'
+        value={geolocation.lng}
+        onChange={(e) => {
+         const val = e.target.value;
+         setGeolocation(prevState => {
+           return { ...prevState, lng: val }
+         });
+        }}
+      ></Form.Control>
+       </Col>
+      </Row>
+    </Form.Group>: <Row>
+       <Col>
+       <Form.Group controlId='address'>
+       <Form.Control
+         type='text'
+         as="textarea"
+         rows={2}
+         placeholder='Enter address'
+         value={address}
+         onChange={(e) => setAddress(e.target.value)}
+       ></Form.Control>
+     </Form.Group>
+       </Col>
+       </Row>
+  }
+   <Form.Group controlId='description'>
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='Enter description'
+                as="textarea"
+                rows={3}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               ></Form.Control>
             </Form.Group>
 

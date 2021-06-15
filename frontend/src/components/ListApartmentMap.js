@@ -1,12 +1,14 @@
 import React, {useEffect, useRef,useState} from 'react'
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import ApartmentMapInfo from "./ApartmentMapInfo"
+import dotenv from "dotenv"
+dotenv.config()
 
 const containerStyle = {
     width: '450px',
     height: '450px'
   };
-  function ListApartmentMap({apartments, selectedId, create, setGeolocationOnMap}) {
+  function ListApartmentMap({apartments, selectedId, clickable, setGeolocationOnMap}) {
   
   const mapRef = useRef(null);
   const [map, setMap] = React.useState(null)
@@ -30,7 +32,7 @@ const containerStyle = {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-rentle',
-    googleMapsApiKey: ""
+    googleMapsApiKey: "AIzaSyBz-DGgWxh1FSE-OKh9yGmOBKSbNUg7stY"
   })
 
   const onUnmount = React.useCallback(function callback(map) {
@@ -46,7 +48,7 @@ const containerStyle = {
     center={position}
       onUnmount={onUnmount}
       onClick={e =>{
-        if(create){
+        if(clickable){
         const lat =e.latLng.lat()
         const lng =e.latLng.lng()
         setMarker({lat,lng})
@@ -58,7 +60,7 @@ const containerStyle = {
       {apartments&& apartments.map((apartment) => (
                         <ApartmentMapInfo apartment={apartment} key={apartment._id} selectedId={selectedId} />
                         ))}
-      {create? <Marker position={marker}  />:<></>}
+      {clickable? <Marker position={marker}  />:<></>}
       </>
     </GoogleMap>
 ) : <></>

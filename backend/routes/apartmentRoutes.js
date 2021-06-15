@@ -11,13 +11,13 @@ import { protect, realtor } from '../middleware/authMiddleware.js'
 
 router
   .route('/')
-  .get( getApartments)
-  .post(  createApartment)
+  .get(protect, getApartments)
+  .post(protect, realtor,  createApartment)
 
 router
   .route('/:id')
   .get( getApartmentById)
-  .delete(  deleteApartment)
-  .put(  updateApartment)
+  .delete(protect, realtor,  deleteApartment)
+  .put(protect, realtor,  updateApartment)
 
 export default router

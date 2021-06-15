@@ -9,7 +9,7 @@ import Message from "../components/Message"
 import Loader from "../components/Loader"
 import {listApartments} from "../actions/apartmentActions"
 
-const HomeScreen = ({match}) => {
+const HomeScreen = ({match, history}) => {
    const [selectedId, setSelectedId] = useState("")
    const [minPrice, setMinPrice] = useState("")
    const [maxPrice, setMaxPrice] = useState("")
@@ -31,10 +31,14 @@ const HomeScreen = ({match}) => {
    const { loading, error, apartments, page, pages } = apartmentList
 
    useEffect(() => {
-      if(userInfo.isRealtor || userInfo.isAdmin)
-         dispatch(listApartments(pageNumber, true))
+      if(userInfo){
+         if(userInfo.isRealtor || userInfo.isAdmin)
+            dispatch(listApartments(pageNumber, true))
+         else
+            dispatch(listApartments())
+      }
       else
-         dispatch(listApartments())
+         history.push('/login')
 
       
     }, [dispatch, pageNumber, userInfo])
@@ -64,6 +68,16 @@ const HomeScreen = ({match}) => {
             setFilteredList(filteredList.filter(apartment => (minRooms===""||apartment.rooms>=minRooms) && (maxRooms===""||apartment.rooms<=maxRooms)))
       }
    }
+
+   const resetFilters = () =>{
+      setMinPrice("")
+      setMaxPrice("")
+      setMinSize("")
+      setMaxSize("")
+      setMinRooms("")
+      setMaxRooms("")
+      setFilteredList(apartments)
+   }
    
 
    return (
@@ -86,18 +100,18 @@ const HomeScreen = ({match}) => {
                         <th style={{margin: "4px", padding: "4px 4px 16px 4px"}}>latest ads</th>
                         <th style={{margin: "4px", padding: "4px"}}>
                            <DropdownButton title="price" variant="text" >
-                                 <InputGroup >       
+                           <InputGroup className="m-2 w-75">  
                                     <FormControl
-                                       placeholder="min price"
+                                       placeholder="min"
                                        aria-label="minimum price"
                                        type="number"
                                        value={minPrice}
                                        onChange={(e) => setMinPrice(e.target.value)}
                                     />
                                  </InputGroup>
-                                 <InputGroup>
+                                 <InputGroup className="m-2 w-75">
                                     <FormControl
-                                       placeholder="max price"
+                                       placeholder="max"
                                        aria-label="maximum price"
                                        type="number"
                                        value={maxPrice}
@@ -112,23 +126,24 @@ const HomeScreen = ({match}) => {
                                                onClick={()=>filterApartments("Price")}>
                                                 Apply
                                        </Button>
-                                       <Button variant="outline-secondary" style={{margin:"0 4px", padding:0,height:"30px", width:"70px"}}>Reset</Button>
+                                       <Button variant="outline-secondary" style={{margin:"0 4px", padding:0,height:"30px", width:"70px"}}
+                                       onClick={() => resetFilters()}>Reset</Button>
                                     
                                  </InputGroup>
                            </DropdownButton>
                         </th>
                         <th style={{margin: "4px", padding: "4px"}}>
                            <DropdownButton title="size" variant="text" >
-                                 <InputGroup >
+                              <InputGroup className="m-2 w-75">
                                     <FormControl
-                                       placeholder="minimum size"
-                                       aria-label="minimum size"
+                                       placeholder="min"
+                                       aria-label="max"
                                        type="number"
                                        value={minSize}
                                        onChange={(e) => setMinSize(e.target.value)}
                                     />
                                  </InputGroup>
-                                 <InputGroup>
+                                 <InputGroup className="m-2 w-75">
                                     <FormControl
                                        placeholder="maximum size"
                                        aria-label="maximum size"
@@ -138,34 +153,35 @@ const HomeScreen = ({match}) => {
                                        
                                     />
                                  </InputGroup>
-                                 <InputGroup>
+                                 <InputGroup >
                                  <Button variant="outline-secondary" 
                                                style={{margin:"0 4px", padding:0,height:"30px", width:"70px",}} 
                                                onClick={() => filterApartments("Size")}>
                                                 Apply
                                        </Button>
-                                       <Button variant="outline-secondary" style={{margin:"0 4px", padding:0,height:"30px", width:"70px"}}>Reset</Button>
+                                       <Button variant="outline-secondary" style={{margin:"0 4px", padding:0,height:"30px", width:"70px"}}
+                                       onClick={() => resetFilters()}>Reset</Button>
                                  </InputGroup>
                            </DropdownButton>
                         </th>
                         <th style={{margin: "4px", padding: "4px"}}>
                            <DropdownButton title="rooms" variant="text" >
-                                 <InputGroup >
+                                 <InputGroup className="m-2 w-75" >
                                     <FormControl
-                                       placeholder="minimum rooms"
+                                       placeholder="min"
                                        aria-label="minimum rooms"
                                        type="number"
                                        value={minRooms}
                                        onChange={(e) => setMinRooms(e.target.value)}
                                     />
                                  </InputGroup>
-                                 <InputGroup>
+                                 <InputGroup className="m-2 w-75">
                                     <FormControl
-                                       placeholder="maximum rooms"
+                                       placeholder="max"
                                        aria-label="maximum rooms"
                                        type="number"
                                        value={maxRooms}
-                                       onChange={(e) => setMaxRooms(e.target.value)}                                       
+                                       onChange={(e) => setMaxRooms(e.target.value)}                               
                                     />
                                  </InputGroup>
                                  <InputGroup>
@@ -175,7 +191,8 @@ const HomeScreen = ({match}) => {
                                                onClick={() => filterApartments("Rooms")}>
                                                 Apply
                                        </Button>
-                                       <Button variant="outline-secondary" style={{margin:"0 4px", padding:0,height:"30px", width:"70px"}}>Reset</Button>
+                                       <Button variant="outline-secondary" style={{margin:"0 4px", padding:0,height:"30px", width:"70px"}}
+                                       onClick={() => resetFilters()}>Reset</Button>
                                     
                                  </InputGroup>
                            </DropdownButton>
