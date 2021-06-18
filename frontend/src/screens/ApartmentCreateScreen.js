@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
@@ -41,7 +41,7 @@ const ApartmentCreateScreen = ({  history }) => {
       if(addressFlag)
         Geocode.fromAddress(address).then(
           (response) => {
-            const { lat, lng } = response.results[0].geometry.location;
+            console.log( response.results[0].geometry.location)
           },
           (error) => {
             console.error(error);

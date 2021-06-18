@@ -200,14 +200,13 @@ const HomeScreen = ({match, history}) => {
                      </thead>
                      <tbody>
                         {!(filteredList.length>0) ? (apartments&& apartments.map((apartment) => (
-                        <tr key={apartment._id} >
+                     
                            <ListApartmentItem apartment={apartment} getSelectedId={getSelectedId}  />
-                        </tr>
+                       
                         ))):
                         (filteredList&& filteredList.map((apartment) => (
-                           <tr key={apartment._id} >
+                        
                               <ListApartmentItem apartment={apartment} getSelectedId={getSelectedId}  />
-                           </tr>
                            )))
                         }
                         </tbody>

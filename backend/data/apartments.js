@@ -40,7 +40,7 @@ const apartments = [
     size: 188,
     rooms: 4,
     geolocation: {lat: 38.5184, lng: 27.1382},
-    rName: 0,
+    rName: "John Doe",
     isRented: false,
   },
   {
@@ -51,7 +51,7 @@ const apartments = [
     size: 42,
     rooms: 2,
     geolocation: {lat: 38.2281, lng: 26.6865},
-    rName: 0,
+    rName: "John Doe",
     isRented: false,
   },
   {
@@ -62,7 +62,7 @@ const apartments = [
     size: 68,
     rooms: 1,
     geolocation: {lat: 38.4397, lng: 27.1456},
-    rName: 0,
+    rName: "Kemal Deniz",
     isRented: false,
   },
   

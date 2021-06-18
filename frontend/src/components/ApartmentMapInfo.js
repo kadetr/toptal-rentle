@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { Marker, InfoWindow } from '@react-google-maps/api';
+import { PropTypes } from 'prop-types'
 
 
 function ApartmentMapInfo ({apartment, selectedId}) {
@@ -36,7 +37,7 @@ function ApartmentMapInfo ({apartment, selectedId}) {
 
       };
 
-    return (<>
+    return (<div data-testid="apartmentMapInfoComponent">
             {apartment.isRented ?
                 (<Marker
                     key={apartment._id}
@@ -49,20 +50,28 @@ function ApartmentMapInfo ({apartment, selectedId}) {
                     (isOpen) &&
                  (<InfoWindow onCloseClick={handleToggleClose
                      } >
-                     <>
-                     <p>{apartment.name}</p>
-                     <p>{apartment.description}</p>
-                    </>
+                     <div>
+                     <p data-testid="componentName" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Name</span> {apartment.name}</p>
+                     <p data-testid="componentDescription" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Description</span> {apartment.description}</p>
+                     <p data-testid="componentPrice" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Price</span> {apartment.price}</p>
+                     <p data-testid="componentSize" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Floor Area</span> {apartment.size}</p>
+                     <p data-testid="componentRooms" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Number of Rooms</span> {apartment.rooms}</p>
+                     <p data-testid="componentRealtorName" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Realtor</span> {apartment.rName}</p>
+                    </div>
                  </InfoWindow>)
                 }
                 {
                     (apartment._id===selectedId) &&
                  <InfoWindow onCloseClick={handleToggleClose
                      } >
-                     <>
-                     <p>{apartment.name}</p>
-                     <p>{apartment.description}</p>
-                    </>
+                     <div>
+                      <p data-testid="componentName" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Name</span> {apartment.name}</p>
+                     <p data-testid="componentDescription" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Description</span> {apartment.description}</p>
+                     <p data-testid="componentPrice" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Price</span> {apartment.price}</p>
+                     <p data-testid="componentSize" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Floor Area</span> {apartment.size}</p>
+                     <p data-testid="componentRooms" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Number of Rooms</span> {apartment.rooms}</p>
+                     <p data-testid="componentRealtorName" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Realtor</span> {apartment.rName}</p>
+                    </div>
                  </InfoWindow>
                 }
                 </Marker>)
@@ -77,26 +86,39 @@ function ApartmentMapInfo ({apartment, selectedId}) {
                 (isOpen) &&
              <InfoWindow onCloseClick={handleToggleClose
                  } >
-                 <>
-                 <p>{apartment.name}</p>
-                 <p>{apartment.description}</p>
-                </>
+                 <div>
+                     <p data-testid="componentName" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Name</span> {apartment.name}</p>
+                     <p data-testid="componentDescription" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Description</span> {apartment.description}</p>
+                     <p data-testid="componentPrice" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Price</span> {apartment.price}</p>
+                     <p data-testid="componentSize" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Floor Area</span> {apartment.size}</p>
+                     <p data-testid="componentRooms" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Number of Rooms</span> {apartment.rooms}</p>
+                     <p data-testid="componentRealtorName" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Realtor</span> {apartment.rName}</p>
+                </div>
              </InfoWindow>
             }
             {
                 (apartment._id===selectedId) &&
              <InfoWindow onCloseClick={handleToggleClose
                  } >
-                 <>
-                 <p>{apartment.name}</p>
-                 <p>{apartment.description}</p>
-                </>
+                 <div>
+                   <p data-testid="componentName" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Name</span> {apartment.name}</p>
+                     <p data-testid="componentDescription" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Description</span> {apartment.description}</p>
+                     <p data-testid="componentPrice" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Price</span> {apartment.price}</p>
+                     <p data-testid="componentSize" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Floor Area</span> {apartment.size}</p>
+                     <p data-testid="componentRooms" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Number of Rooms</span> {apartment.rooms}</p>
+                     <p data-testid="componentRealtorName" style={{padding:0, margin:"4px"}}><span style={{fontWeight: "bold"}}>Realtor</span> {apartment.rName}</p>
+                </div>
              </InfoWindow>
             }
             </Marker>)}
             
-            </>
+            </div>
         )
 }
+
+ApartmentMapInfo.propTypes = {
+    apartment: PropTypes.object,
+    selectedId: PropTypes.string
+  }
 
 export default ApartmentMapInfo;

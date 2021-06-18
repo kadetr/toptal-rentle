@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Button, Row,Col } from 'react-bootstrap'
@@ -118,7 +117,7 @@ const ApartmentEditScreen = ({ match, history }) => {
             <div><span onClick={()=>handleAddressFlag(false)}>Geolocation</span> | <span onClick={()=>handleAddressFlag(true)}>Address</span></div>
     {!addressFlag ? 
     <Form.Group controlId='geolocation'>
-      <ListApartmentMap clickable ={true} setGeolocationOnMap={setGeolocationOnMap}/>
+      <ListApartmentMap clickable ={true} apartment={apartment} setGeolocationOnMap={setGeolocationOnMap} />
       <Row>
       <Col className="w-50 py-3">
         <Form.Label>Latitude</Form.Label>

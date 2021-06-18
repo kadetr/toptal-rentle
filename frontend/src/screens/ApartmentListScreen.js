@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
-import ListApartmentMap from "../components/ListApartmentMap"
 import {
   listApartments,
   deleteApartment,

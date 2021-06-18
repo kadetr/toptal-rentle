@@ -38,7 +38,7 @@ import {
   }
   
   export const apartmentDetailsReducer = (
-    state = { apartment: { reviews: [] } },
+    state = { apartment: {  } },
     action
   ) => {
     switch (action.type) {

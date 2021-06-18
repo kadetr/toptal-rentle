@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 import Header from './components/Header'
@@ -15,18 +15,11 @@ import ApartmentListScreen from "./screens/ApartmentListScreen";
 import ApartmentEditScreen from "./screens/ApartmentEditScreen";
 
 const App = () => {
-   const [isOpen, setIsOpen] = useState(false);
-
-
-   const toggle = () => {
-      setIsOpen(!isOpen);
-   };
-   // useEffect(() => {});
+  
 
    return (
       <Router>
-         {/* <Sidebar isOpen={isOpen} toggle={toggle} /> */}
-         <Header toggle={toggle} />
+         <Header/>
          <main className='py-3'>
         <Container>
           <Route path='/login' component={LoginScreen} />
